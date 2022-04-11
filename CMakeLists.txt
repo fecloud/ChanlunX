@@ -2,5 +2,7 @@
 project (ChanlunX)
 set (ChanlunX_VERSION_MAJOR 1)
 set (ChanlunX_VERSION_MINOR 0)
+include_directories(include)
+include_directories(include/win32)
 aux_source_directory(. SRCS)
 add_library(ChanlunX SHARED ${SRCS})
