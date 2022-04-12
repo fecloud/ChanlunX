@@ -1,0 +1,39 @@
+plugins {
+    id 'java'
+    id 'org.jetbrains.kotlin.jvm' version '1.4.10'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib"
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+jar {
+    //详细信息参考 https://docs.gradle.org/current/dsl/org.gradle.api.tasks.bundling.Jar.html
+    archivesBaseName = 'cljava'//基本的文件名
+    archiveVersion = '' //版本
+    manifest { //配置jar文件的manifest
+        attributes(
+                "Manifest-Version": 1.0,
+                'Main-Class': 'com.stock.chanlun.MainKt' //指定main方法所在的文件
+        )
+    }
+    //打包依赖包
+    from {
+        (configurations.runtimeClasspath).collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
+}
